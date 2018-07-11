@@ -1,0 +1,35 @@
+media_player.home_mini:
+  config_entry_id:
+  name:
+  platform: cast
+  unique_id: 7ff09ced-301d-200b-0441-3dfa98929609
+media_player.sala:
+  config_entry_id:
+  name:
+  platform: cast
+  unique_id: 6e40b3bd-3ec7-44df-95b4-e24b4c709393
+media_player.bedroom:
+  config_entry_id:
+  name: Som Suite
+  platform: cast
+  unique_id: 3f2f9d0d-bfd3-a16b-f0a1-610066696ed9
+media_player.casa:
+  config_entry_id:
+  name:
+  platform: cast
+  unique_id: 69aed78f-05b0-4f30-9605-c55144ff71c5
+media_player.pedro_tv:
+  config_entry_id:
+  name:
+  platform: cast
+  unique_id: b7f5639d-8f6f-695e-fef6-e329c0f96349
+media_player.receiver:
+  config_entry_id:
+  name:
+  platform: cast
+  unique_id: c4d70ff5-a7c3-7b8a-4127-c69efd7b9dcc
+switch.bebedouro_2:
+  config_entry_id:
+  name:
+  platform: wemo
+  unique_id: 201612K001CA96F

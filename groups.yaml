@@ -1,0 +1,84 @@
+  default_view:
+    view: yes
+    icon: mdi:home 
+    entities:
+      - group.sala
+      - group.cozinha
+      - group.suite
+      - group.quarto
+      - group.all_automations
+      - group.all_lights
+      - device_tracker.gian
+      - device_tracker.denyse
+      - device_tracker.pc_escritorio
+      - device_tracker.3085a950446b
+      - sensor.cpu_temperature
+      - sensor.cpu_used
+      - sensor.cpu_disk_used
+      - sensor.ram_used
+      - sensor.since_last_boot
+      - weather.yweather
+      - sensor.speedtest_download
+      - sensor.speedtest_upload
+      - sensor.speedtest_ping
+      - media_player.casa
+
+  sala:
+    name: Sala
+    view: yes
+    entities:
+      - light.sanca_sala
+      - switch.receiver
+      - switch.lamp
+      - switch.cortineiro
+      - media_player.kodi_sala
+      - media_player.receiver
+      - media_player.tv_sala
+      - media_player.sala
+      - sensor.kodi_cpu_temperature
+      - camera.sala
+
+  cozinha:
+    name: Cozinha
+    view: yes
+    entities:
+      - media_player.home_mini
+      - switch.bebedouro
+
+  suite:
+    name: Suite
+    view: yes
+    entities:
+      - switch.persiana_suite_abrir
+      - switch.persiana_suite_fechar
+      - media_player.tv_suite
+      - media_player.suite
+      - media_player.bedroom
+
+  quarto:
+    name: Quarto Pedro
+    view: yes
+    entities:
+      - media_player.pedro_tv
+      - camera.quarto_pedro
+
+  bw:
+    name: BW Social
+    view: yes
+    entities:
+      - media_player.bw_social
+
+  office:
+    name: Escritorio
+    view: yes
+    entities:
+      - media_player.kodi_escritorio
+      - media_player.plex_web_chrome
+      - switch.pc  
+
+  automations:
+    name: Automações
+    view: yes
+    entities:
+      - group.all_automations
+      - group.all_scripts

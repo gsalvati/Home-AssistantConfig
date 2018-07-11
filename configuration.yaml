@@ -1,0 +1,311 @@
+
+homeassistant:
+  # Name of the location where Home Assistant is running
+  name: Salvati
+  # Location required to calculate the time the sun rises and sets
+  latitude: -27.576321
+  longitude: -48.5389
+  # Impacts weather/sunrise data (altitude above sea level in meters)
+  elevation: 10
+  # metric for Metric, imperial for Imperial
+  unit_system: metric
+  # Pick yours from here: http://en.wikipedia.org/wiki/List_of_tz_database_time_zones
+  time_zone: America/Sao_Paulo
+
+  customize: !include customize.yaml
+
+# Show links to resources in log and frontend
+#introduction:
+
+# Enables the frontend
+frontend:
+  #javascript_version: latest
+
+# Enables configuration UI
+config:
+
+http:
+  # Uncomment this to add a password (recommended!)
+  api_password: qwE--0123
+  # Uncomment this if you are using SSL or running in Docker etc
+  # base_url: example.duckdns.org:8123
+  ssl_certificate: /root/.homeassistant/certificate.pem
+  ssl_key: /root/.homeassistant/privkey.pem
+
+# Checks for available updates
+updater:
+
+# Discover some devices automatically
+discovery:
+
+# Allows you to issue voice commands from the frontend in enabled browsers
+conversation:
+
+recorder:
+# purge_days: 1
+  db_url: sqlite:///root/.homeassistant/home-assistant_v2.db
+  exclude:
+    domains:
+      - automation
+      - weblink
+      - updater
+      - sensor
+      - switch
+      - media_player
+      - light
+
+# Enables support for tracking state changes over time.
+history:
+  exclude:
+    domains:
+      - automation
+      - weblink
+      - updater
+      - sensor
+      - switch
+      - media_player
+      - light
+
+# View all events in a logbook
+logbook:
+
+# Track the sun
+sun:
+
+weather:
+  - platform: yweather
+
+# Weather Prediction
+sensor:
+#  - platform: yweather
+#    monitored_conditions:
+#      - weather
+#      - weather_current
+#      - temp_min
+#      - temp_max
+#      - wind_speed
+#      - humidity
+#      - temperature
+
+  - platform: command_line
+    name: CPU Temperature
+    command: "cat /sys/class/thermal/thermal_zone0/temp"
+    unit_of_measurement: "°C"
+    value_template: '{{ value | multiply(1) }}'
+
+  - platform: command_line
+    name: Kodi CPU Temperature
+    command: "ssh root@192.168.0.10 '/bin/cat /sys/class/thermal/thermal_zone0/temp'"
+    unit_of_measurement: "°C"
+    value_template: '{{ value | multiply(1) }}'
+
+  - platform: systemmonitor
+    resources:
+    - type: disk_use_percent
+      arg: /
+    - type: memory_free
+    - type: memory_use_percent
+    - type: processor_use
+    - type: since_last_boot
+    #- type: network_in
+    #  arg: eth0
+    #- type: network_out
+    #  arg: eth0
+
+  - platform: speedtest
+    monitored_conditions:
+    - ping
+    - download
+    - upload
+
+# Text to speech
+tts:
+  - platform: google
+    language: 'pt-br'
+    speed: '20'
+    motion: '5'
+
+group: !include groups.yaml
+
+media_player:
+  - platform: mpd
+    host: 192.168.0.101 
+    name: BW Social
+
+  - platform: braviatv
+    host: 192.168.0.90
+
+    name: TV Suite
+
+  - platform: kodi
+    host: 192.168.0.10
+    name: Kodi Sala
+
+  - platform: kodi
+    host: 192.168.0.50
+    name: Kodi Escritorio
+
+  - platform: cast
+
+  - platform: samsungtv
+    host: 192.168.0.11
+    port: 8001
+    name: TV Sala
+    mac: 54:bd:79:dc:56:a2
+
+  - platform: pioneer
+    host: 192.168.0.92
+    name: Bedroom
+
+panel_iframe:
+  kodi_sala:
+    title: 'Kodi Sala'
+    url: 'http://192.168.0.10:8080'
+    icon: mdi:kodi
+
+  kodi_escritorio:
+    title: 'Kodi Escritorio'
+    url: 'http://192.168.0.50:8080'
+    icon: mdi:kodi
+
+automation: !include automations.yaml
+
+notify:
+  - platform: kodi
+    name: Kodi Sala
+    host: 192.168.0.10
+
+  - platform: pushbullet
+    name: Pushbullet Gian
+    api_key: o.HMC56ZemNVzUvaerY7L8YvtCIj79lYcS
+
+cloud:
+  google_actions:
+    filter:
+      exclude_domains:
+        - group
+      exclude_entities:
+        - media_player.pedro_tv
+        - media_player.receiver
+        - media_player.sala
+        - media_player.casa
+        - media_player.bw_social
+        - media_player.bedroom
+        - media_player.home_mini
+        - light.sanca_sala
+mqtt:
+  broker: m12.cloudmqtt.com
+  port: 11577
+  username: buybqytq
+  password: qCszj8vQZp5J
+
+device_tracker:
+  - platform: nmap_tracker
+    consider_home: 180
+    hosts:
+      - 192.168.0.1/24
+      - 192.168.1.1/24
+
+#  - platform: owntracks
+
+google_assistant:
+  project_id: ha-salvati
+  client_id: eywOGZRlVCzMwq0pFjBuJOtvsQKuy6Rmq4bJmuXu8x8QUTQJhztCStJxMcigA3yalh5PDUYFDzVKgkrK
+  access_token: R3ujewSc8PGz1jmJb7H5GqXzYuPghW5juaBprpmqappQxIQFPVPq7tadmxLLwkqDHsQXb1v6XftKPUgF
+  api_key: AIzaSyAUAczj7U8OcXzlY8Jpg6DZj3RAmE1UJv0
+  expose_by_default: false
+  exposed_domains:
+    - switch
+    - light
+    #- group
+    #- media_player
+
+light:
+  - platform: flux_led
+    devices:
+      192.168.0.20:
+        name: "Sanca Sala"
+        mode: "rgb"
+
+wake_on_lan:
+
+switch:
+  - platform: wake_on_lan
+    mac_address: "1C-42-90-A4-12-C2"
+    name: PC
+
+  - platform: broadlink
+    host: 192.168.0.106
+    mac: '34:ea:34:43:21:aa'
+    friendly_name: IR Blaster
+    type: rm2_pro_plus2
+    switches:
+      lamp:
+        friendly_name: "Luz rack"
+        command_on: 'sgAEAQ0oDSgNKAwpDSgoECgPDSkMKA0pDCgNKCgQKBAoECgPDSkMKQwpDCkMKQwoDSgoEAwAAYoMKQwpDCkMKQwpKA8pDw0oDSgNKAwpDCkoECgQKA8oEA0oDSgNKA0oDCkMKQ0oKBAMAAGKDCgNKA0oDSgNKCgQKBAMKQwpDCkMKQwpKBAoECgPKBANKAwpDCkNKAwpDCkNKCgQDAABigwpDCkMKA0oDSgoECgQDCkNKA0oDCkMKSgQKA8pDykPDSgNKA0oDCkMKQ0oDCkoEAwAAYkNKA0pDCgNKA0oKBAoEA0oDCkNKAwpDCkoECgPKQ8oEAwpDSgNKAwpDSgMKQwpKA8NAAXcAAAAAAA='
+        command_off: 'sgAEAQ0oDSgNKAwpDSgoECgPDSkMKA0pDCgNKCgQKBAoECgPDSkMKQwpDCkMKQwoDSgoEAwAAYoMKQwpDCkMKQwpKA8pDw0oDSgNKAwpDCkoECgQKA8oEA0oDSgNKA0oDCkMKQ0oKBAMAAGKDCgNKA0oDSgNKCgQKBAMKQwpDCkMKQwpKBAoECgPKBANKAwpDCkNKAwpDCkNKCgQDAABigwpDCkMKA0oDSgoECgQDCkNKA0oDCkMKSgQKA8pDykPDSgNKA0oDCkMKQ0oDCkoEAwAAYkNKA0pDCgNKA0oKBAoEA0oDCkNKAwpDCkoECgPKQ8oEAwpDSgNKAwpDSgMKQwpKA8NAAXcAAAAAAA='
+
+      cortineiro:
+        friendly_name: "Luz cortineiro"
+        command_on: 'JgBoAAABKpQUERQRFBITEhQRFBITEhQRFDYTNhQ2FDYTEhQ2EzYUNhQ2FDUUEhQRFBEUEhMSFBEUERQSEzYUNhQ2EzYUNhQ2EwAFQwABKUoUAAxYAAEqSRQADFkAASlKEwAMWQABKkkUAA0F'
+#        command_red: 'JgBYAAABKpMUERQSExITEhQRFBITEhMSFDYTNhQ2EzYUEhM2FTUUNhMSFBEUNhMSFBEUERQSExIUNRQ2FBEUNhQ2EzYUNhM2FAAFQAABK0gVAAxMAAEpShMADQU='
+#        command_blue: 'JgBQAAABKZQTEhQRFBITEhQRFBEUEhMSFDUUNhQ2FDUUEhM2FDYUNhMSFDYTNhQSExITEhQRFBITNhQRFBITNhQ2FDYTNhQ2FAAFQQABKkkUAA0FAAAAAAAAAAA='
+#        command_green: 'JgBQAAABKpMUEhQRFBEUEhMSFBEUERQSEzYUNhQ2EzYUERQ2FDYTNhQ2FBEUNhQRFBITEhQRFBEUEhM2FBITNhQ2EzYUNhQ2FAAFQQABKkkUAA0FAAAAAAAAAAA='
+        command_off: 'JgBQAAABKpMUEhMSFBEUERQSExIUERQRFDYUNhM2FDYUERQ2FDUUNhQRFDYUERQRFBITEhQRFBEUNhQRFDYUNRQ2FDYTNhQ2FAAFQQABKkkTAA0FAAAAAAAAAAA='
+
+      receiver:
+        friendly_name: "Receiver Pioneer"
+        command_on: 'JgDYAAABGIwSNBIREjQSEhESEjQSERI0EhESNBIREjQSNBIREjQSEhESEhESNBI0EjQSERIREhESNBI0EhIREhIREjQSNBI0EgADRAABGYwTMxIREjQSERIREjQSEhE1ERISNBIREjQSNBIREjQSERIREhIRNRI0EjQREhIREhESNBI0EhESERISEjQRNRE1EQADRQABGYwSNBESEjQSERIREjQSERI0EhESNBISETUSNBESEjQREhIREhESNBI0EjQSERISERISNBI0EhESERIREjQSNBI0EgANBQ=='
+        command_off: 'JgDYAAABGIwSNBIREjQSEhESEjQSERI0EhESNBIREjQSNBIREjQSEhESEhESNBI0EjQSERIREhESNBI0EhIREhIREjQSNBI0EgADRAABGYwTMxIREjQSERIREjQSEhE1ERISNBIREjQSNBIREjQSERIREhIRNRI0EjQREhIREhESNBI0EhESERISEjQRNRE1EQADRQABGYwSNBESEjQSERIREjQSERI0EhESNBISETUSNBESEjQREhIREhESNBI0EjQSERISERISNBI0EhESERIREjQSNBI0EgANBQ=='
+
+  - platform: mqtt
+    name: "Bebedouro"
+    state_topic: "stat/sonoff/POWER"
+    command_topic: "cmnd/sonoff/POWER"
+    availability_topic: "tele/sonoff/LWT"
+    qos: 1
+    payload_on: "ON"
+    payload_off: "OFF"
+    payload_available: "Online"
+    payload_not_available: "Offline"
+    retain: true
+
+  - platform: tuya
+    host: 192.168.0.187
+    local_key: 'd8db8a968adb4631' 
+    device_id: '03200257dc4f221b471b' 
+    switches:
+      switch1: 
+        friendly_name: "Persiana Suite abrir"
+        id: 1
+      switch2: 
+        friendly_name: "Persiana Suite fechar"
+        id: 2
+
+ifttt:
+  key: ZYHgJ_y1hcasGYXhf1MtV
+
+#emulated_hue:
+#  listen_port: 80
+
+camera:
+  - platform: mjpeg
+    mjpeg_url: http://192.168.0.98:28905/videostream.cgi?user=admin&pwd=12345678
+    name: Quarto Pedro
+    username: admin
+    password: 12345678
+
+  - platform: mjpeg
+    mjpeg_url: http://192.168.0.111:12650/videostream.cgi?user=admin&pwd=12345678
+    name: Sala
+    username: admin
+    password: 12345678
+
+#image_processing:
+# - platform: dlib_face_identify
+#   source:
+#    - entity_id: camera.sala
+#   faces:
+#     Gian: /root/gian.jpg
+#     Denyse: /root/denyse.jpg
+#     Pedro: /root/pedro.jpg

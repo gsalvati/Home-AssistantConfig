@@ -1,0 +1,85 @@
+- id: '1529889785152'
+  alias: Denyse em casa
+  trigger:
+  - entity_id: device_tracker.denyse
+    from: not_home
+    platform: state
+    to: home
+  condition:
+  - after: '18:00'
+    before: '19:00'
+    condition: time
+  action:
+  - data:
+      entity_id: light.sanca_sala
+    service: light.turn_on
+  - timeout: 0:05
+    wait_template: ''
+  - data:
+      entity_id: light.sanca_sala
+    service: light.turn_off
+- id: '1529972330919'
+  alias: Gian em casa
+  trigger:
+  - entity_id: device_tracker.gian
+    from: not_home
+    platform: state
+    to: home
+  condition:
+  - after: '18:00'
+    before: '19:00'
+    condition: time
+  action:
+  - data:
+      device_id: light.sanca_sala
+    service: switch.turn_on
+  - timeout: 00:05
+    wait_template: ''
+  - data:
+      entity_id: light.sanca_sala
+    service: switch.turn_off
+- id: '1530634738126'
+  alias: Bebedouro - Ligar
+  trigger:
+  - at: '18:00'
+    platform: time
+  condition:
+  - condition: state
+    entity_id: switch.bebedouro
+    state: 'off'
+  action:
+  - data:
+      entity_id: switch.bebedouro
+    service: switch.turn_on
+- id: '1530634808602'
+  alias: Bebedouro - Desligar
+  trigger:
+  - at: 00:00
+    platform: time
+  condition:
+  - condition: state
+    entity_id: switch.bebedouro
+    state: 'on'
+  action:
+  - data:
+      entity_id: switch.bebedouro
+    service: switch.turn_off
+- id: '1530635223197'
+  alias: Desligar Receiver (sem uso)
+  trigger:
+  - at: 00:00
+    platform: time
+  condition:
+  - condition: state
+    entity_id: device_tracker.som_sala
+    state: home
+  - condition: state
+    entity_id: media_player.tv_sala
+    state: 'off'
+  - condition: state
+    entity_id: media_player.receiver
+    state: 'off'
+  action:
+  - data:
+      entity_id: switch.receiver
+    service: switch.turn_off
