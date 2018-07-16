@@ -36,6 +36,7 @@
       - media_player.tv_sala
       - media_player.sala
       - sensor.kodi_cpu_temperature
+      - vacuum.rose
       - camera.sala
 
   cozinha:
@@ -52,6 +53,7 @@
       - switch.persiana_suite_abrir
       - switch.persiana_suite_fechar
       - media_player.tv_suite
+      - media_player.kodi_suite
       - media_player.suite
       - media_player.bedroom
 
@@ -61,6 +63,7 @@
     entities:
       - media_player.pedro_tv
       - camera.quarto_pedro
+      - light.pedro_led
 
   bw:
     name: BW Social

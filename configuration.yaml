@@ -46,25 +46,19 @@ recorder:
   db_url: sqlite:///root/.homeassistant/home-assistant_v2.db
   exclude:
     domains:
-      - automation
       - weblink
       - updater
       - sensor
-      - switch
       - media_player
-      - light
 
 # Enables support for tracking state changes over time.
 history:
   exclude:
     domains:
-      - automation
       - weblink
       - updater
       - sensor
-      - switch
       - media_player
-      - light
 
 # View all events in a logbook
 logbook:
@@ -127,6 +121,12 @@ tts:
 
 group: !include groups.yaml
 
+vacuum:
+  - platform: xiaomi_miio
+    name: Rose
+    host: 192.168.0.75
+    token: 6b695a546d73686433466a3163516a52
+
 media_player:
   - platform: mpd
     host: 192.168.0.101 
@@ -134,12 +134,21 @@ media_player:
 
   - platform: braviatv
     host: 192.168.0.90
-
     name: TV Suite
+    mac: D8:D4:3C:20:F8:72
+    turn_on_action:
+      service: wake_on_lan.send_magic_packet
+      data:
+        mac: "D8-D4-3C-20-F8-72"
+        broadcast_address: 192.168.0.0/24
 
   - platform: kodi
     host: 192.168.0.10
     name: Kodi Sala
+
+  - platform: kodi
+    host: 192.168.0.39
+    name: Kodi Suite
 
   - platform: kodi
     host: 192.168.0.50
@@ -152,6 +161,11 @@ media_player:
     port: 8001
     name: TV Sala
     mac: 54:bd:79:dc:56:a2
+    turn_on_action:
+      service: wake_on_lan.send_magic_packet
+      data:
+        mac: "54-BD-79-DC-56-A2"
+        broadcast_address: 192.168.0.0/24
 
   - platform: pioneer
     host: 192.168.0.92
@@ -161,6 +175,11 @@ panel_iframe:
   kodi_sala:
     title: 'Kodi Sala'
     url: 'http://192.168.0.10:8080'
+    icon: mdi:kodi
+
+  kodi_suite:
+    title: 'Kodi Suite'
+    url: 'http://192.168.0.39:8080'
     icon: mdi:kodi
 
   kodi_escritorio:
@@ -205,6 +224,9 @@ device_tracker:
     hosts:
       - 192.168.0.1/24
       - 192.168.1.1/24
+  - platform: xiaomi_miio
+    host: 192.168.0.115
+    token: 867f908177976ac727215f3b83b03860
 
 #  - platform: owntracks
 
@@ -226,12 +248,16 @@ light:
       192.168.0.20:
         name: "Sanca Sala"
         mode: "rgb"
+      192.168.0.29:
+        name: "Pedro LED"
+        mode: "rgb"
 
 wake_on_lan:
 
 switch:
   - platform: wake_on_lan
     mac_address: "1C-42-90-A4-12-C2"
+    broadcast_address: 192.168.0.0/24
     name: PC
 
   - platform: broadlink
@@ -309,3 +335,5 @@ camera:
 #     Gian: /root/gian.jpg
 #     Denyse: /root/denyse.jpg
 #     Pedro: /root/pedro.jpg
+
+media_extractor:
