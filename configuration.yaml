@@ -311,6 +311,11 @@ switch:
 ifttt:
   key: ZYHgJ_y1hcasGYXhf1MtV
 
+tuya:
+  username: 48991031030
+  password: qwE--0123
+  country_code: 55
+
 #emulated_hue:
 #  listen_port: 80
 
@@ -337,3 +342,56 @@ camera:
 #     Pedro: /root/pedro.jpg
 
 media_extractor:
+
+
+cover:
+  - platform: template
+    covers:
+      suite_window:
+        friendly_name: "Suite Window"
+        open_cover:
+          service: ifttt.trigger
+          data:
+            event: open_suite_window
+            value1: ok
+        close_cover:
+          service: ifttt.trigger
+          data:
+            event: close_suite_window
+            value1: ok
+      office_window:
+        friendly_name: "Office Window"
+        open_cover:
+          service: ifttt.trigger
+          data:
+            event: open_office_window
+            value1: ok
+        close_cover:
+          service: ifttt.trigger
+          data:
+            event: close_office_window
+            value1: ok
+      pedro_window:
+        friendly_name: "Pedro Window"
+        open_cover:
+          service: ifttt.trigger
+          data:
+            event: open_pedro_window
+            value1: ok
+        close_cover:
+          service: ifttt.trigger
+          data:
+            event: close_pedro_window
+            value1: ok
+      all_window:
+        friendly_name: "All Window"
+        open_cover:
+          service: ifttt.trigger
+          data:
+            event: open_all_window
+            value1: ok
+        close_cover:
+          service: ifttt.trigger
+          data:
+            event: close_all_window
+            value1: ok
