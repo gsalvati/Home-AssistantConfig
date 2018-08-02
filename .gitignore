@@ -1,4 +1,6 @@
 *
+!*.conf
+!*.sh
 !*.yaml
 !scenes
 !.gitignore
