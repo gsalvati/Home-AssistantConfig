@@ -145,6 +145,17 @@ media_player:
   - platform: kodi
     host: 192.168.0.10
     name: Kodi Sala
+    turn_on_action: 
+      service: wake_on_lan.send_magic_packet
+      data:
+        mac: 36:3F:6C:37:DB:3B
+        broadcast_address: 192.168.255.255
+
+    turn_off_action:
+      service: media_player.kodi_call_method
+      data:
+        entity_id: media_player.kodi
+        method: System.Hibernate
 
   - platform: kodi
     host: 192.168.0.39
@@ -296,17 +307,22 @@ switch:
     payload_not_available: "Offline"
     retain: true
 
-  - platform: tuya
-    host: 192.168.0.187
-    local_key: 'd8db8a968adb4631' 
-    device_id: '03200257dc4f221b471b' 
+  - platform: template
     switches:
-      switch1: 
-        friendly_name: "Persiana Suite abrir"
-        id: 1
-      switch2: 
-        friendly_name: "Persiana Suite fechar"
-        id: 2
+      kitchen_sound:
+        friendly_name: "Som Cozinha"
+        value_template: false
+        turn_on:
+          service: ifttt.trigger
+          data:
+            event: switch_on_som_cozinha
+            value1: on
+        turn_off:
+          service: ifttt.trigger
+          data:
+            event: switch_off_som_cozinha
+            value1: off
+
 
 ifttt:
   key: ZYHgJ_y1hcasGYXhf1MtV
@@ -344,54 +360,54 @@ camera:
 media_extractor:
 
 
-cover:
-  - platform: template
-    covers:
-      suite_window:
-        friendly_name: "Suite Window"
-        open_cover:
-          service: ifttt.trigger
-          data:
-            event: open_suite_window
-            value1: ok
-        close_cover:
-          service: ifttt.trigger
-          data:
-            event: close_suite_window
-            value1: ok
-      office_window:
-        friendly_name: "Office Window"
-        open_cover:
-          service: ifttt.trigger
-          data:
-            event: open_office_window
-            value1: ok
-        close_cover:
-          service: ifttt.trigger
-          data:
-            event: close_office_window
-            value1: ok
-      pedro_window:
-        friendly_name: "Pedro Window"
-        open_cover:
-          service: ifttt.trigger
-          data:
-            event: open_pedro_window
-            value1: ok
-        close_cover:
-          service: ifttt.trigger
-          data:
-            event: close_pedro_window
-            value1: ok
-      all_window:
-        friendly_name: "All Window"
-        open_cover:
-          service: ifttt.trigger
-          data:
-            event: open_all_window
-            value1: ok
-        close_cover:
-          service: ifttt.trigger
-          data:
-            event: close_all_window
-            value1: ok
+#cover:
+#  - platform: template
+#    covers:
+#      suite_window:
+#        friendly_name: "Suite Window"
+#        open_cover:
+#          service: ifttt.trigger
+#          data:
+#            event: open_suite_window
+#            value1: ok
+#        close_cover:
+#          service: ifttt.trigger
+#          data:
+#            event: close_suite_window
+#            value1: ok
+#      office_window:
+#        friendly_name: "Office Window"
+#        open_cover:
+#          service: ifttt.trigger
+#          data:
+#            event: open_office_window
+#            value1: ok
+#        close_cover:
+#          service: ifttt.trigger
+#          data:
+#            event: close_office_window
+#            value1: ok
+#      pedro_window:
+#        friendly_name: "Pedro Window"
+#        open_cover:
+#          service: ifttt.trigger
+#          data:
+#            event: open_pedro_window
+#            value1: ok
+#        close_cover:
+#          service: ifttt.trigger
+#          data:
+#            event: close_pedro_window
+#            value1: ok
+#      all_window:
+#        friendly_name: "All Window"
+#        open_cover:
+#          service: ifttt.trigger
+#          data:
+#            event: open_all_window
+#            value1: ok
+#        close_cover:
+#          service: ifttt.trigger
+#          data:
+#            event: close_all_window
+#            value1: ok

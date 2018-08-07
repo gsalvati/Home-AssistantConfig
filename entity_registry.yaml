@@ -33,3 +33,23 @@ switch.bebedouro_2:
   name:
   platform: wemo
   unique_id: 201612K001CA96F
+scene.gnojijnmdnimrphe:
+  config_entry_id:
+  name:
+  platform: tuya
+  unique_id: tuya.gNOjiJnMDnImRphe
+cover.03200257dc4f221bd65e:
+  config_entry_id:
+  name:
+  platform: tuya
+  unique_id: tuya.03200257dc4f221bd65e
+cover.03200257dc4f221b45bb:
+  config_entry_id:
+  name:
+  platform: tuya
+  unique_id: tuya.03200257dc4f221b45bb
+cover.03200257dc4f221b471b:
+  config_entry_id:
+  name:
+  platform: tuya
+  unique_id: tuya.03200257dc4f221b471b

@@ -22,7 +22,7 @@
       - sensor.speedtest_upload
       - sensor.speedtest_ping
       - media_player.casa
-      - cover.all_window
+#      - cover.all_window
 
   sala:
     name: Sala
@@ -46,6 +46,7 @@
     entities:
       - media_player.home_mini
       - switch.bebedouro
+      - switch.kitchen_sound
 
   suite:
     name: Suite
@@ -57,7 +58,7 @@
       - media_player.kodi_suite
       - media_player.suite
       - media_player.bedroom
-      - cover.suite_window
+      - cover.03200257dc4f221b471b
 
   quarto:
     name: Quarto Pedro
@@ -66,7 +67,7 @@
       - media_player.pedro_tv
       - camera.quarto_pedro
       - light.pedro_led
-      - cover.pedro_window
+      - cover.03200257dc4f221b45bb
 
   bw:
     name: BW Social
@@ -81,7 +82,7 @@
       - media_player.kodi_escritorio
       - media_player.plex_web_chrome
       - switch.pc  
-      - cover.office_window
+      - cover.03200257dc4f221bd65e
 
 
   automations:
